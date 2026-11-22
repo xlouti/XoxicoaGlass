@@ -1,0 +1,17 @@
+Xoxicoa Glass AUTO test. AUTO listens to 4 s of audio and sets Depth, Sharpness, Speed and Focus.
+Each material is looped; AUTO is started at 5 different points (0, 1.3, 2.9, 4.4, 6.1 s) to check that it is stable.
+Pass rules: settings in range, the 5 runs agree (Depth and Sharpness within +-0.10, Speed within +-0.12, Focus edges within 2/3 octave),
+the same audio gives identical results, and the choices fit the material (rules per material below).
+
+Rage supersaw lead  PASS  Depth 0.66  Sharp 0.70  Speed 0.57  Focus 300 - 9100 Hz  | harshness 4.4, narrow share 0.66 | spread over 5 windows: Depth 0.04, Sharp 0.03, Speed 0.00, Low 0.00 oct, High 0.00 oct
+Bright hi-hats      PASS  Depth 0.37  Sharp 0.65  Speed 0.68  Focus 5000 - 20000 Hz  | harshness 0.8, narrow share 0.62 | spread over 5 windows: Depth 0.01, Sharp 0.00, Speed 0.00, Low 0.00 oct, High 0.00 oct
+Distorted 808       PASS  Depth 0.28  Sharp 0.51  Speed 0.40  Focus 1300 - 5100 Hz  | harshness 0.6, narrow share 0.46 | spread over 5 windows: Depth 0.00, Sharp 0.01, Speed 0.00, Low 0.00 oct, High 0.00 oct
+Harsh vocal-like    PASS  Depth 0.56  Sharp 0.47  Speed 0.58  Focus 1700 - 12000 Hz  | harshness 2.7, narrow share 0.41 | spread over 5 windows: Depth 0.01, Sharp 0.01, Speed 0.02, Low 0.00 oct, High 0.00 oct
+Full harsh mix      PASS  Depth 0.50  Sharp 0.71  Speed 0.61  Focus 400 - 19000 Hz  | harshness 3.4, narrow share 0.67 | spread over 5 windows: Depth 0.03, Sharp 0.04, Speed 0.00, Low 0.00 oct, High 0.08 oct
+Soft pad (clean)    PASS  Depth 0.26  Sharp 0.44  Speed 0.38  Focus 800 - 3600 Hz  | harshness 0.5, narrow share 0.38 | spread over 5 windows: Depth 0.00, Sharp 0.00, Speed 0.01, Low 0.00 oct, High 0.00 oct
+Pink noise (flat)   PASS  Depth 0.15  Sharp 0.50  Speed 0.50  Focus 2000 - 16000 Hz  | harshness 0.0, narrow share 0.54 | spread over 5 windows: Depth 0.00, Sharp 0.00, Speed 0.00, Low 0.00 oct, High 0.00 oct
+
+PASS  every harsh material gets more Depth (min 0.28) than the clean ones (max 0.26)
+PASS  on silence AUTO reports 'no audio' and changes nothing
+
+ALL PASS

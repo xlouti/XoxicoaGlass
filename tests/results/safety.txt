@@ -1,0 +1,114 @@
+Xoxicoa Glass safety, reduction and CPU report
+
+PASS  Depth 0 is transparent: output - input null = -138.8 dB (latency 1024 samples reported and compensated)
+PASS  Delta at Depth 0 is silent (nothing removed): -146.7 dB RMS
+PASS  Delta = input - processed (null -142.8 dB); Delta level -22.2 dB RMS vs input -7.8
+PASS  Tonal Target changes only the display (Off / Rage / Pluggnb outputs are bit-identical)
+PASS  Mono in / mono out runs and stays finite
+
+Presets on every material (6 s each). Output must be finite and never louder at the peak than the input + 1 dB (Output 0 dB).
+RING = level change at the known ringing frequencies of that material, CLEAN = change at frequencies without rings, RMS = overall.
+
+Rage supersaw lead
+  Init                  OK   peak   -3.78 (in   -3.00)  RMS   -0.81  RING   -7.31  CLEAN   -2.73  CPU   1.88 %
+  Tame Rage Lead        OK   peak   -3.84 (in   -3.00)  RMS   -0.89  RING   -9.03  CLEAN   -3.48  CPU   1.85 %
+  Smooth Hats           OK   peak   -3.20 (in   -3.00)  RMS   -0.08  RING   -3.22  CLEAN   -0.00  CPU   1.93 %
+  808 Grit Control      OK   peak   -5.52 (in   -3.00)  RMS   -5.30  RING   -7.54  CLEAN   -4.81  CPU   1.90 %
+  Vocal De-harsh        OK   peak   -3.59 (in   -3.00)  RMS   -0.61  RING   -7.19  CLEAN   -1.27  CPU   1.84 %
+  Screech Softener      OK   peak   -3.80 (in   -3.00)  RMS   -1.09  RING  -14.43  CLEAN   -6.04  CPU   1.78 %
+  Alias Cleaner         OK   peak   -3.72 (in   -3.00)  RMS   -0.76  RING  -11.08  CLEAN   -0.20  CPU   1.75 %
+  Supersaw Wall Polish  OK   peak   -3.76 (in   -3.00)  RMS   -0.80  RING   -5.76  CLEAN   -2.87  CPU   1.96 %
+  Pluggnb Keys Glow     OK   peak   -3.53 (in   -3.00)  RMS   -0.79  RING   -3.10  CLEAN   -2.16  CPU   1.88 %
+  Bright Pluck Tamer    OK   peak   -3.60 (in   -3.00)  RMS   -0.59  RING  -10.02  CLEAN   -0.73  CPU   1.84 %
+  Master Bus Gentle     OK   peak   -3.27 (in   -3.00)  RMS   -0.28  RING   -2.20  CLEAN   -0.26  CPU   1.91 %
+
+Bright hi-hats
+  Init                  OK   peak   -4.08 (in   -3.00)  RMS   -1.38  RING   -4.83  CLEAN   -1.24  CPU   1.87 %
+  Tame Rage Lead        OK   peak   -4.14 (in   -3.00)  RMS   -1.55  RING   -6.18  CLEAN   -1.30  CPU   1.84 %
+  Smooth Hats           OK   peak   -3.99 (in   -3.00)  RMS   -1.35  RING   -4.22  CLEAN   -1.45  CPU   1.94 %
+  808 Grit Control      OK   peak   -3.00 (in   -3.00)  RMS   -0.00  RING   -0.00  CLEAN   -0.00  CPU   1.88 %
+  Vocal De-harsh        OK   peak   -3.72 (in   -3.00)  RMS   -0.85  RING   -3.51  CLEAN   -0.98  CPU   1.83 %
+  Screech Softener      OK   peak   -4.03 (in   -3.00)  RMS   -0.92  RING   -8.57  CLEAN   -1.54  CPU   1.77 %
+  Alias Cleaner         OK   peak   -5.56 (in   -3.00)  RMS   -3.01  RING  -15.19  CLEAN   -1.47  CPU   1.75 %
+  Supersaw Wall Polish  OK   peak   -3.93 (in   -3.00)  RMS   -1.10  RING   -3.38  CLEAN   -1.27  CPU   1.95 %
+  Pluggnb Keys Glow     OK   peak   -3.32 (in   -3.00)  RMS   -0.26  RING   -1.05  CLEAN   -0.47  CPU   1.86 %
+  Bright Pluck Tamer    OK   peak   -4.25 (in   -3.00)  RMS   -1.57  RING   -6.20  CLEAN   -1.19  CPU   2.71 %
+  Master Bus Gentle     OK   peak   -3.37 (in   -3.00)  RMS   -0.51  RING   -1.50  CLEAN   -0.47  CPU   1.89 %
+
+Distorted 808
+  Init                  OK   peak   -3.60 (in   -3.00)  RMS   -0.00  RING   -5.48  CLEAN   -0.03  CPU   1.86 %
+  Tame Rage Lead        OK   peak   -3.63 (in   -3.00)  RMS   -0.00  RING   -6.45  CLEAN   -0.04  CPU   1.83 %
+  Smooth Hats           OK   peak   -3.01 (in   -3.00)  RMS   -0.00  RING    0.00  CLEAN   -0.03  CPU   1.93 %
+  808 Grit Control      OK   peak   -3.62 (in   -3.00)  RMS   -0.00  RING   -5.37  CLEAN   -0.10  CPU   1.87 %
+  Vocal De-harsh        OK   peak   -3.48 (in   -3.00)  RMS   -0.00  RING   -4.90  CLEAN   -0.03  CPU   1.81 %
+  Screech Softener      OK   peak   -3.33 (in   -3.00)  RMS   -0.00  RING  -14.82  CLEAN   -0.19  CPU   1.76 %
+  Alias Cleaner         OK   peak   -3.28 (in   -3.00)  RMS   -0.00  RING   -0.86  CLEAN   -0.17  CPU   1.70 %
+  Supersaw Wall Polish  OK   peak   -3.59 (in   -3.00)  RMS   -0.00  RING   -4.69  CLEAN   -0.04  CPU   1.93 %
+  Pluggnb Keys Glow     OK   peak   -3.32 (in   -3.00)  RMS   -0.00  RING   -2.49  CLEAN   -0.04  CPU   1.86 %
+  Bright Pluck Tamer    OK   peak   -3.38 (in   -3.00)  RMS   -0.00  RING   -3.86  CLEAN   -0.07  CPU   1.81 %
+  Master Bus Gentle     OK   peak   -3.24 (in   -3.00)  RMS   -0.00  RING   -1.75  CLEAN   -0.01  CPU   1.88 %
+
+Harsh vocal-like
+  Init                  OK   peak   -4.19 (in   -3.00)  RMS   -0.75  RING   -6.59  CLEAN   -1.01  CPU   1.86 %
+  Tame Rage Lead        OK   peak   -5.20 (in   -3.00)  RMS   -0.84  RING   -7.37  CLEAN   -1.26  CPU   2.44 %
+  Smooth Hats           OK   peak   -5.97 (in   -3.00)  RMS   -1.00  RING   -4.63  CLEAN   -0.00  CPU   1.95 %
+  808 Grit Control      OK   peak   -3.52 (in   -3.00)  RMS   -2.14  RING   -4.70  CLEAN   -1.53  CPU   1.91 %
+  Vocal De-harsh        OK   peak   -4.97 (in   -3.00)  RMS   -0.68  RING   -5.66  CLEAN   -0.00  CPU   1.83 %
+  Screech Softener      OK   peak   -7.21 (in   -3.00)  RMS   -1.18  RING  -13.24  CLEAN   -0.18  CPU   1.77 %
+  Alias Cleaner         OK   peak   -4.55 (in   -3.00)  RMS   -0.98  RING  -10.86  CLEAN   -0.00  CPU   1.72 %
+  Supersaw Wall Polish  OK   peak   -3.87 (in   -3.00)  RMS   -0.76  RING   -6.28  CLEAN   -0.94  CPU   1.96 %
+  Pluggnb Keys Glow     OK   peak   -3.36 (in   -3.00)  RMS   -0.58  RING   -3.06  CLEAN   -0.80  CPU   1.86 %
+  Bright Pluck Tamer    OK   peak   -6.33 (in   -3.00)  RMS   -0.99  RING   -8.49  CLEAN   -0.00  CPU   1.83 %
+  Master Bus Gentle     OK   peak   -3.26 (in   -3.00)  RMS   -0.31  RING   -2.23  CLEAN   -0.00  CPU   1.91 %
+
+Full harsh mix
+  Init                  OK   peak   -1.28 (in   -1.00)  RMS   -0.06  RING   -5.07  CLEAN   -3.15  CPU   1.88 %
+  Tame Rage Lead        OK   peak   -1.30 (in   -1.00)  RMS   -0.07  RING   -6.39  CLEAN   -3.92  CPU   2.02 %
+  Smooth Hats           OK   peak   -1.04 (in   -1.00)  RMS   -0.01  RING   -0.54  CLEAN    0.00  CPU   1.94 %
+  808 Grit Control      OK   peak   -1.91 (in   -1.00)  RMS   -0.24  RING   -4.53  CLEAN   -6.84  CPU   1.89 %
+  Vocal De-harsh        OK   peak   -1.17 (in   -1.00)  RMS   -0.05  RING   -4.99  CLEAN   -0.02  CPU   1.82 %
+  Screech Softener      OK   peak   -1.20 (in   -1.00)  RMS   -0.08  RING  -12.51  CLEAN   -0.57  CPU   1.77 %
+  Alias Cleaner         OK   peak   -1.47 (in   -1.00)  RMS   -0.06  RING  -10.87  CLEAN    0.00  CPU   1.73 %
+  Supersaw Wall Polish  OK   peak   -1.26 (in   -1.00)  RMS   -0.06  RING   -4.00  CLEAN   -3.79  CPU   1.95 %
+  Pluggnb Keys Glow     OK   peak   -1.15 (in   -1.00)  RMS   -0.05  RING   -2.11  CLEAN   -3.00  CPU   2.06 %
+  Bright Pluck Tamer    OK   peak   -1.31 (in   -1.00)  RMS   -0.05  RING   -7.01  CLEAN    0.00  CPU   1.83 %
+  Master Bus Gentle     OK   peak   -1.09 (in   -1.00)  RMS   -0.02  RING   -1.50  CLEAN   -0.01  CPU   1.89 %
+
+Soft pad (clean)
+  Init                  OK   peak   -6.14 (in   -6.00)  RMS   -0.01  RING     -    CLEAN    0.00  CPU   1.86 %
+  Tame Rage Lead        OK   peak   -6.14 (in   -6.00)  RMS   -0.01  RING     -    CLEAN    0.00  CPU   1.84 %
+  Smooth Hats           OK   peak   -6.00 (in   -6.00)  RMS    0.00  RING     -    CLEAN    0.00  CPU   1.93 %
+  808 Grit Control      OK   peak   -6.21 (in   -6.00)  RMS   -0.01  RING     -    CLEAN   -0.01  CPU   1.89 %
+  Vocal De-harsh        OK   peak   -6.01 (in   -6.00)  RMS   -0.00  RING     -    CLEAN    0.00  CPU   1.88 %
+  Screech Softener      OK   peak   -6.08 (in   -6.00)  RMS   -0.00  RING     -    CLEAN    0.00  CPU   1.78 %
+  Alias Cleaner         OK   peak   -6.01 (in   -6.00)  RMS   -0.00  RING     -    CLEAN    0.00  CPU   1.78 %
+  Supersaw Wall Polish  OK   peak   -6.18 (in   -6.00)  RMS   -0.01  RING     -    CLEAN    0.00  CPU   1.96 %
+  Pluggnb Keys Glow     OK   peak   -6.10 (in   -6.00)  RMS   -0.01  RING     -    CLEAN    0.00  CPU   1.88 %
+  Bright Pluck Tamer    OK   peak   -6.01 (in   -6.00)  RMS   -0.00  RING     -    CLEAN    0.00  CPU   1.83 %
+  Master Bus Gentle     OK   peak   -6.01 (in   -6.00)  RMS   -0.00  RING     -    CLEAN    0.00  CPU   1.90 %
+
+Pink noise (flat)
+  Init                  OK   peak   -6.18 (in   -6.00)  RMS   -0.13  RING     -    CLEAN   -0.25  CPU   1.89 %
+  Tame Rage Lead        OK   peak   -6.22 (in   -6.00)  RMS   -0.15  RING     -    CLEAN   -0.28  CPU   1.89 %
+  Smooth Hats           OK   peak   -6.03 (in   -6.00)  RMS   -0.06  RING     -    CLEAN   -0.09  CPU   1.94 %
+  808 Grit Control      OK   peak   -6.18 (in   -6.00)  RMS   -0.12  RING     -    CLEAN   -0.40  CPU   1.91 %
+  Vocal De-harsh        OK   peak   -6.12 (in   -6.00)  RMS   -0.10  RING     -    CLEAN   -0.23  CPU   1.85 %
+  Screech Softener      OK   peak   -6.78 (in   -6.00)  RMS   -0.51  RING     -    CLEAN   -1.42  CPU   1.86 %
+  Alias Cleaner         OK   peak   -6.31 (in   -6.00)  RMS   -0.47  RING     -    CLEAN   -1.67  CPU   1.78 %
+  Supersaw Wall Polish  OK   peak   -6.15 (in   -6.00)  RMS   -0.11  RING     -    CLEAN   -0.29  CPU   2.00 %
+  Pluggnb Keys Glow     OK   peak   -6.08 (in   -6.00)  RMS   -0.06  RING     -    CLEAN   -0.17  CPU   2.02 %
+  Bright Pluck Tamer    OK   peak   -6.09 (in   -6.00)  RMS   -0.12  RING     -    CLEAN   -0.30  CPU   1.83 %
+  Master Bus Gentle     OK   peak   -6.04 (in   -6.00)  RMS   -0.04  RING     -    CLEAN   -0.08  CPU   1.91 %
+
+CPU (percent of one core in real time, whole plugin, stereo, Tame Rage Lead on the full harsh mix, 20 s):
+  44.1 kHz, block   64: 1.79 %   (FFT 1024, latency 23.2 ms)
+  44.1 kHz, block  256: 1.72 %   (FFT 1024, latency 23.2 ms)
+  44.1 kHz, block 1024: 1.71 %   (FFT 1024, latency 23.2 ms)
+  48.0 kHz, block   64: 1.90 %   (FFT 1024, latency 21.3 ms)
+  48.0 kHz, block  256: 1.94 %   (FFT 1024, latency 21.3 ms)
+  48.0 kHz, block 1024: 1.86 %   (FFT 1024, latency 21.3 ms)
+  96.0 kHz, block   64: 5.00 %   (FFT 2048, latency 21.3 ms)
+  96.0 kHz, block  256: 4.99 %   (FFT 2048, latency 21.3 ms)
+  96.0 kHz, block 1024: 4.97 %   (FFT 2048, latency 21.3 ms)
+
+ALL PASS

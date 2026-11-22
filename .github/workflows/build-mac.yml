@@ -1,0 +1,138 @@
+name: Build Xoxicoa Glass for Mac
+on:
+  workflow_dispatch:
+  push:
+    # A pushed tag like v1.2.0 builds and publishes a GitHub release (path filters are not applied to tags).
+    tags: ['v*']
+    paths:
+      - 'Source/**'
+      - 'CMakeLists.txt'
+      - '.github/workflows/build-mac.yml'
+concurrency:
+  group: build-mac-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  mac-universal:
+    # Intel runner (arm64 hosted runners were unavailable); still builds a universal binary.
+    runs-on: macos-15-intel
+    timeout-minutes: 45
+    env:
+      # Do not pass -DCMAKE_OSX_DEPLOYMENT_TARGET; CMakeLists.txt is the source of truth.
+      MACOSX_DEPLOYMENT_TARGET: "10.15"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16.4
+        run: |
+          if [ -d /Applications/Xcode_16.4.app ]; then sudo xcode-select -s /Applications/Xcode_16.4.app; fi
+          xcodebuild -version
+      - name: Configure (universal arm64 + x86_64)
+        run: |
+          set -euo pipefail
+          echo "MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
+          cmake -S . -B build-mac -G Xcode \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          echo "---- CMake cache ----"
+          grep -E '^CMAKE_OSX_DEPLOYMENT_TARGET' build-mac/CMakeCache.txt
+          echo "---- Xcode project ----"
+          grep -h MACOSX_DEPLOYMENT_TARGET build-mac/*.xcodeproj/project.pbxproj | sort | uniq -c
+          if ! grep -h MACOSX_DEPLOYMENT_TARGET build-mac/*.xcodeproj/project.pbxproj | grep -q '10.15'; then
+            echo "Xcode project does not set MACOSX_DEPLOYMENT_TARGET to 10.15"
+            exit 1
+          fi
+      - name: Build AU, VST3 and Standalone
+        run: cmake --build build-mac --config Release --parallel 3
+      - name: Sign ad-hoc, verify architectures, package
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="build-mac/XoxicoaGlass_artefacts/Release"
+          mkdir -p package
+          ditto "$ROOT/AU/Xoxicoa Glass.component" "package/Xoxicoa Glass.component"
+          ditto "$ROOT/VST3/Xoxicoa Glass.vst3" "package/Xoxicoa Glass.vst3"
+          ditto "$ROOT/Standalone/Xoxicoa Glass.app" "package/Xoxicoa Glass.app"
+          for b in "package/Xoxicoa Glass.component" "package/Xoxicoa Glass.vst3" "package/Xoxicoa Glass.app"; do
+            bin="$b/Contents/MacOS/Xoxicoa Glass"
+            python3 cmake/weak_os_workgroup.py "$bin"
+            codesign --force --deep --sign - "$b"
+            # Xcode 16 lipo: the binary path must come BEFORE -verify_arch
+            lipo "$bin" -verify_arch arm64 x86_64
+            lipo -info "$bin"
+            minos_for() {
+              otool -l -arch "$1" "$2" | awk '
+                $1=="cmd" && ($2=="LC_BUILD_VERSION" || $2=="LC_VERSION_MIN_MACOSX") {show=1; next}
+                show && $1=="minos" {print $2; exit}
+                show && $1=="version" {print $2; exit}
+              '
+            }
+            x86_minos="$(minos_for x86_64 "$bin")"
+            arm_minos="$(minos_for arm64 "$bin")"
+            echo "minos x86_64=${x86_minos} arm64=${arm_minos} ($b)"
+            plist="$b/Contents/Info.plist"
+            plist_min="$(plutil -extract LSMinimumSystemVersion raw "$plist")"
+            echo "LSMinimumSystemVersion=${plist_min} ($plist)"
+            if [ "$x86_minos" != "10.15" ] || [ "$plist_min" != "10.15" ]; then
+              echo "expected x86_64 minos and LSMinimumSystemVersion 10.15"
+              exit 1
+            fi
+            echo "---- os_workgroup imports x86_64 ($b) ----"
+            xcrun nm -m -arch x86_64 "$bin" | grep '_os_workgroup_' || true
+            if xcrun nm -m -arch x86_64 "$bin" | grep '_os_workgroup_' | grep -v 'weak' | grep -q .; then
+              echo "os_workgroup imports are not weak on x86_64"
+              exit 1
+            fi
+          done
+          cp README.md package/
+          ditto -c -k --sequesterRsrc --keepParent package XoxicoaGlass_mac_universal.zip
+      - name: Validate AU (informational)
+        continue-on-error: true
+        run: |
+          mkdir -p ~/Library/Audio/Plug-Ins/Components
+          ditto "package/Xoxicoa Glass.component" ~/Library/Audio/Plug-Ins/Components/"Xoxicoa Glass.component"
+          killall -9 AudioComponentRegistrar || true
+          auval -v aufx XxGl Xoxi
+      - name: Package release zip (VST3 + AU only, small download)
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf relpkg && mkdir relpkg
+          ditto "package/Xoxicoa Glass.vst3" "relpkg/Xoxicoa Glass.vst3"
+          ditto "package/Xoxicoa Glass.component" "relpkg/Xoxicoa Glass.component"
+          (cd relpkg && zip -qry ../XoxicoaGlass_mac_vst3_au.zip "Xoxicoa Glass.vst3" "Xoxicoa Glass.component")
+          ls -l XoxicoaGlass_mac_vst3_au.zip
+          unzip -l XoxicoaGlass_mac_vst3_au.zip | tail -1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: XoxicoaGlass_mac_universal
+          path: |
+            XoxicoaGlass_mac_universal.zip
+            XoxicoaGlass_mac_vst3_au.zip
+          retention-days: 30
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: mac-universal
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: XoxicoaGlass_mac_universal
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "Universal macOS build (arm64 + x86_64) of Xoxicoa Glass ${TAG}, built by GitHub Actions on macos-15-intel." \
+            "" \
+            "Glass de-harsh + tonal balance mix tool: real-time resonance smoothing (Depth, Sharpness, Speed, Focus range, Soft/Hard, Delta, Mix, Output), AUTO listen-and-set, and a tonal-balance display with approximate Rage and Pluggnb target curves. 10 presets. See CHANGELOG.md and FEATURE_LIST.md." \
+            "" \
+            "XoxicoaGlass_mac_vst3_au.zip has Xoxicoa Glass.vst3 and Xoxicoa Glass.component. XoxicoaGlass_mac_universal.zip also has the Standalone app." \
+            "" \
+            "Minimum macOS 10.15 (x86_64 slice minos 10.15). The _os_workgroup imports are weak, so Catalina loads it. Ad-hoc signed." \
+            > notes.md
+          gh release create "$TAG" XoxicoaGlass_mac_vst3_au.zip XoxicoaGlass_mac_universal.zip \
+            --repo "$GITHUB_REPOSITORY" --title "Xoxicoa Glass $TAG" --notes-file notes.md
